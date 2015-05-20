@@ -1,0 +1,1 @@
+var app = angular.module('coffee-o-matic-5000', []);
