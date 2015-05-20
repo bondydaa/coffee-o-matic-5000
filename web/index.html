@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="coffee-o-matic-5000">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,14 +11,23 @@
 
     <link rel="stylesheet" href="/assets/css/main.css">
 </head>
-<body>
-    <div class="site">
+<body ng-app="coffeeOMatic" ng-controller="mainController">
+    <div class="app" role="main">
+        <div class="display">
+            <div class="inventory">
+                <ul class="inventory-list">
+                    <li class="inventory-list-item" ng-repeat="ingredient in inventory">{{ ingredient.displayName }}</li>
+                </ul>
+            </div><!-- end: .inventory -->
 
-        <div class="site-main">
-            <div ng-view></div>
-        </div> <!-- end: .site-main -->
+            <div class="menu">
+                <ul class="menu-list">
+                    <li class="menu-list-item" ng-repeat="drink in recipes">{{ drink.displayName }}</li>
+                </ul>
+            </div> <!-- end: .menu -->
+        </div> <!-- end: .display -->
 
-    </div> <!-- end: .site -->
+    </div> <!-- end: .app -->
     <!-- Scripts -->
     <script src="/assets/scripts/App.js"></script>
     <!-- // Scripts -->
