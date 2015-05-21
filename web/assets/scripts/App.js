@@ -111,6 +111,7 @@ angular.module('coffeeOMatic.controllers', [])
         // grab our data
         $scope.inventory = inventoryService.getInventory();
         $scope.recipes = recipeService.getRecipes();
+        $scope.restockInventory = JSON.stringify(inventoryService.getInventory());
 
         $scope.makeDrink = function(drinkName){
             var ingredientsToUse = recipeService.getDrinkDetails(drinkName, 'ingredients');
@@ -123,6 +124,9 @@ angular.module('coffeeOMatic.controllers', [])
                 alert(err + ' ' + drinkDisplayName);
             }
         };
+        $scope.restock = function() {
+            inventoryService.resetInventory($scope.inventory, $scope.restockInventory);
+        }
     });
 
 // Services
