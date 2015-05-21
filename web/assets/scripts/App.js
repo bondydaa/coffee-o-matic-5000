@@ -67,8 +67,8 @@ coffeeOMatic.recipes = {
         'displayName': 'Caffe Latte',
         'price': '2.55',
         'ingredients': {
-            'espresso': 2,
-            'steamedMilk': 1
+            'steamedMilk': 1,
+            'espresso': 2
         }
     },
     'caffeAmericano': {
@@ -137,16 +137,33 @@ angular.module('coffeeOMatic.services', [])
                 return _ingredient.units;
             },
             useIngredients: function(neededIngredients) {
+                var originalInventory = JSON.stringify(coffeeOMatic.inventory);
+
                 for ( var _curIngredient in neededIngredients ) {
                     var ingredient = coffeeOMatic.inventory[_curIngredient];
                     var unitsAvailable = this.getUnitsRemaining.call(this, _curIngredient);
                     var neededUnits = neededIngredients[_curIngredient];
 
                     if ( unitsAvailable < neededUnits ) {
+                        this.resetInventory.call(this, neededIngredients, originalInventory);
                         throw 'Out of Stock';
                     } else {
                         ingredient.units = unitsAvailable - neededUnits;
                     }
+                }
+            },
+            setUnits: function(ingredientToUpdate, newUnits) {
+                var _ingredientToUpdate = coffeeOMatic.inventory[ingredientToUpdate];
+                _ingredientToUpdate['units'] = newUnits;
+            },
+            resetInventory: function(usedIngredients, orgInventory) {
+                var _orgInventory = JSON.parse(orgInventory);
+
+                for ( var _usedIngredient in usedIngredients ) {
+                    var orgIngredient = _orgInventory[_usedIngredient];
+                    var orgUnits = orgIngredient.units;
+
+                    this.setUnits.call(this, _usedIngredient, orgUnits);
                 }
             }
         };
