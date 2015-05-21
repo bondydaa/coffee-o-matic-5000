@@ -16,16 +16,20 @@
         <div class="display">
             <div class="inventory">
                 <ul class="inventory-list">
-                    <li class="inventory-list-item" ng-repeat="ingredient in inventory">{{ ingredient.displayName }}</li>
+                    <li class="inventory-list-item" ng-repeat="ingredient in inventory">{{ ingredient.displayName }}<span class="unit-counter">{{ ingredient.units }}</span></li>
                 </ul>
             </div><!-- end: .inventory -->
 
             <div class="menu">
                 <ul class="menu-list">
-                    <li class="menu-list-item" ng-repeat="drink in recipes">{{ drink.displayName }}</li>
+                    <li class="menu-list-item" ng-repeat="drink in recipes">{{ drink.displayName }} <span class="menu-price">{{ drink.price }}</span></li>
                 </ul>
             </div> <!-- end: .menu -->
         </div> <!-- end: .display -->
+
+        <div class="order-drink-menu">
+            <button ng-repeat="drink in recipes" ng-click="makeDrink(drink.name)" model="drink.ingredients" class="order-drink-btn">{{ drink.displayName }}</button>
+        </div>
 
     </div> <!-- end: .app -->
     <!-- Scripts -->

@@ -35,7 +35,7 @@ module.exports = function (grunt) {
                     cwd: '<%= config.src %>',
                     src: [
                         '**/*.html',
-                        'assets/media/**',
+                        'assets/partials/**',
                         'assets/scripts/**/*.js',
                         'assets/vendor/**/*.js',
                         'assets/vendor/**/*.map'
@@ -52,7 +52,7 @@ module.exports = function (grunt) {
                 tasks: ['copy:site']
             },
             watchStatic: {
-                files: ['<%= config.src %>/assets/media/**'],
+                files: ['<%= config.src %>/assets/partials/**'],
                 tasks: ['copy:site']
             },
             watchStyles: {

@@ -4,86 +4,101 @@ var coffeeOMatic = coffeeOMatic || {};
 coffeeOMatic.inventory = {
     'coffee': {
         'displayName': 'Coffee',
-        'units': 10,
-        'price': .75
+        'units': 10
     },
     'decafCoffee': {
         'displayName': 'Decaf Coffee',
-        'units': 10,
-        'price': .75
+        'units': 10
     },
     'sugar': {
         'displayName': 'Sugar',
-        'units': 10,
-        'price': .25
+        'units': 10
     },
     'cream': {
         'displayName': 'Cream',
-        'units': 10,
-        'price': .25
+        'units': 10
     },
     'steamedMilk': {
         'displayName': 'Steamed Milk',
-        'units': 10,
-        'price': .35
+        'units': 10
     },
     'foamedMilk': {
         'displayName': 'Foamed Milk',
-        'units': 10,
-        'price': .35
+        'units': 10
     },
     'espresso': {
         'displayName': 'Espresso',
-        'units': 10,
-        'price': 1.10
+        'units': 10
     },
     'cocoa': {
         'displayName': 'Cocoa',
-        'units': 10,
-        'price': .90
+        'units': 10
     },
     'whippedCream': {
         'displayName': 'Whipped Cream',
-        'units': 10,
-        'price': 1.00
+        'units': 10
     }
 };
 
 // declare how to make each drink
 coffeeOMatic.recipes = {
     'coffee': {
+        'name': 'coffee',
         'displayName': 'Coffee',
-        'coffee': 3,
-        'sugar': 1,
-        'cream': 1
+        'price': '2.75',
+        'ingredients': {
+            'coffee': 3,
+            'sugar': 1,
+            'cream': 1
+        }
     },
     'decafCoffee': {
+        'name': 'decafCoffee',
         'displayName': 'Decaf Coffee',
-        'decafCoffee': 3,
-        'sugar': 1,
-        'cream': 1
+        'price': '2.75',
+        'ingredients': {
+            'decafCoffee': 3,
+            'sugar': 1,
+            'cream': 1
+        }
     },
     'caffeLatte': {
+        'name': 'caffeLatte',
         'displayName': 'Caffe Latte',
-        'espresso': 2,
-        'steamedMilk': 1
+        'price': '2.55',
+        'ingredients': {
+            'espresso': 2,
+            'steamedMilk': 1
+        }
     },
     'caffeAmericano': {
+        'name': 'caffeAmericano',
         'displayName': 'Caffe Americano',
-        'espresso': 3
+        'price': '3.30',
+        'ingredients': {
+            'espresso': 3
+        }
     },
     'caffeeMocha': {
+        'name': 'caffeeMocha',
         'displayName': 'Caffe Mocha',
-        'espresso': 1,
-        'cocoa': 1,
-        'steamedMilk': 1,
-        'whippedCream': 1
+        'price': '3.35',
+        'ingredients': {
+            'espresso': 1,
+            'cocoa': 1,
+            'steamedMilk': 1,
+            'whippedCream': 1
+        }
     },
     'cappuccino': {
+        'name': 'cappuccino',
         'displayName': 'Cappuccino',
-        'espresso': 2,
-        'steamedMilk': 1,
-        'foamedMilk': 1
+        'price': '2.90',
+        'ingredients': {
+            'espresso': 2,
+            'steamedMilk': 1,
+            'foamedMilk': 1
+        }
     }
 };
 
@@ -97,9 +112,22 @@ angular.module('coffeeOMatic.controllers', [])
         $scope.inventory = inventoryService.getInventory();
         $scope.recipes = recipeService.getRecipes();
 
-        // do things with data
-        $scope.makeDrink = function(){
+        $scope.makeDrink = function(drinkName){
+            var drinkObject = $scope.recipes[drinkName];
+            var ingredientsToUse = drinkObject.ingredients;
+            var ingredientsCheck = true;
 
+            for ( var curIngredient in ingredientsToUse ) {
+                if ( inventoryService.getUnitsRemaining(curIngredient) < ingredientsToUse[curIngredient] ) {
+                    ingredientsCheck = false;
+                }
+            }
+
+            if ( ingredientsCheck ) {
+                inventoryService.useIngredients(ingredientsToUse);
+            } else {
+                alert('Out of Stock: '+drinkObject.displayName);
+            }
         };
     });
 
@@ -110,8 +138,18 @@ angular.module('coffeeOMatic.services', [])
             getInventory: function() {
                 return coffeeOMatic.inventory;
             },
-            getIngredient: function(ingredientName) {
-                return coffeeOMatic.inventory[ingredientName];
+            getUnitsRemaining: function(ingredientName) {
+                var _ingredient = coffeeOMatic.inventory[ingredientName]
+                return _ingredient.units;
+            },
+            useIngredients: function(neededIngredients) {
+                for ( var _curIngredient in neededIngredients ) {
+                    var ingredient = coffeeOMatic.inventory[_curIngredient];
+                    var unitsAvailable = ingredient.units;
+                    var neededUnits = neededIngredients[_curIngredient];
+
+                    ingredient.units = unitsAvailable - neededUnits;
+                }
             }
         };
     })
@@ -119,12 +157,6 @@ angular.module('coffeeOMatic.services', [])
         return {
             getRecipes: function() {
                 return coffeeOMatic.recipes;
-            },
-            getDrink: function(drinkName) {
-                return coffeeOMatic.recipes[drinkName];
             }
         }
     });
-
-
-//Directives
