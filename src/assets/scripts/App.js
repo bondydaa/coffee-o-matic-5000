@@ -113,20 +113,14 @@ angular.module('coffeeOMatic.controllers', [])
         $scope.recipes = recipeService.getRecipes();
 
         $scope.makeDrink = function(drinkName){
-            var drinkObject = $scope.recipes[drinkName];
-            var ingredientsToUse = drinkObject.ingredients;
-            var ingredientsCheck = true;
+            var ingredientsToUse = recipeService.getDrinkDetails(drinkName, 'ingredients');
+            var drinkDisplayName = recipeService.getDrinkDetails(drinkName, 'displayName');
 
-            for ( var curIngredient in ingredientsToUse ) {
-                if ( inventoryService.getUnitsRemaining(curIngredient) < ingredientsToUse[curIngredient] ) {
-                    ingredientsCheck = false;
-                }
-            }
-
-            if ( ingredientsCheck ) {
+            try {
                 inventoryService.useIngredients(ingredientsToUse);
-            } else {
-                alert('Out of Stock: '+drinkObject.displayName);
+            }
+            catch (err) {
+                alert(err + ' ' + drinkDisplayName);
             }
         };
     });
@@ -145,10 +139,14 @@ angular.module('coffeeOMatic.services', [])
             useIngredients: function(neededIngredients) {
                 for ( var _curIngredient in neededIngredients ) {
                     var ingredient = coffeeOMatic.inventory[_curIngredient];
-                    var unitsAvailable = ingredient.units;
+                    var unitsAvailable = this.getUnitsRemaining.call(this, _curIngredient);
                     var neededUnits = neededIngredients[_curIngredient];
 
-                    ingredient.units = unitsAvailable - neededUnits;
+                    if ( unitsAvailable < neededUnits ) {
+                        throw 'Out of Stock';
+                    } else {
+                        ingredient.units = unitsAvailable - neededUnits;
+                    }
                 }
             }
         };
@@ -157,6 +155,10 @@ angular.module('coffeeOMatic.services', [])
         return {
             getRecipes: function() {
                 return coffeeOMatic.recipes;
+            },
+            getDrinkDetails: function(drinkName, property) {
+                var _drinkName = coffeeOMatic.recipes[drinkName];
+                return _drinkName[property];
             }
         }
     });

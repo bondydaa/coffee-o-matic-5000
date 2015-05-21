@@ -22,7 +22,7 @@
 
             <div class="menu">
                 <ul class="menu-list">
-                    <li class="menu-list-item" ng-repeat="drink in recipes">{{ drink.displayName }} <span class="menu-price">{{ drink.price }}</span></li>
+                    <li class="menu-list-item" ng-repeat="drink in recipes">{{ drink.displayName }} <span class="menu-price">{{ drink.price | currency }}</span></li>
                 </ul>
             </div> <!-- end: .menu -->
         </div> <!-- end: .display -->
