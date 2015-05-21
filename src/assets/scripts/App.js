@@ -132,6 +132,9 @@ angular.module('coffeeOMatic.services', [])
             getInventory: function() {
                 return coffeeOMatic.inventory;
             },
+            getIngredient: function(name) {
+                return coffeeOMatic.inventory[name];
+            },
             getUnitsRemaining: function(ingredientName) {
                 var _ingredient = coffeeOMatic.inventory[ingredientName]
                 return _ingredient.units;
@@ -140,7 +143,7 @@ angular.module('coffeeOMatic.services', [])
                 var originalInventory = JSON.stringify(coffeeOMatic.inventory);
 
                 for ( var _curIngredient in neededIngredients ) {
-                    var ingredient = coffeeOMatic.inventory[_curIngredient];
+                    var ingredient = this.getIngredient.call(this, _curIngredient);
                     var unitsAvailable = this.getUnitsRemaining.call(this, _curIngredient);
                     var neededUnits = neededIngredients[_curIngredient];
 
@@ -173,6 +176,7 @@ angular.module('coffeeOMatic.services', [])
             getRecipes: function() {
                 return coffeeOMatic.recipes;
             },
+            // letting recipes allow for growth/changes in data
             getDrinkDetails: function(drinkName, property) {
                 var _drinkName = coffeeOMatic.recipes[drinkName];
                 return _drinkName[property];

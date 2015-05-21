@@ -29,6 +29,7 @@
 
         <div class="order-drink-menu">
             <button ng-repeat="drink in recipes" ng-click="makeDrink(drink.name)" model="drink.ingredients" class="order-drink-btn">{{ drink.displayName }}</button>
+            <button ng-click="restock()" class="order-drink-btn restock">Restock Machine</button>
         </div>
 
     </div> <!-- end: .app -->
