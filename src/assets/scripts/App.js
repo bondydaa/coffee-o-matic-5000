@@ -180,7 +180,6 @@ angular.module('coffeeOMatic.services', [])
             getRecipes: function() {
                 return coffeeOMatic.recipes;
             },
-            // letting recipes allow for growth/changes in data
             getDrinkDetails: function(drinkName, property) {
                 var _drinkName = coffeeOMatic.recipes[drinkName];
                 return _drinkName[property];
