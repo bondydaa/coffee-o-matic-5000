@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="coffee-o-matic-5000">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title >Coffee-O-Matic 5000</title >
+    <title>Coffee-O-Matic 5000</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -11,23 +11,30 @@
 
     <link rel="stylesheet" href="/assets/css/main.css">
 </head>
-<body>
-    <div class="site">
+<body ng-app="coffeeOMatic" ng-controller="mainController">
+    <div class="app" role="main">
+        <div class="display">
+            <div class="inventory">
+                <h2 class="display-header">Inventory</h2>
+                <ul class="inventory-list">
+                    <li class="inventory-list-item" ng-repeat="ingredient in inventory">{{ ingredient.displayName }}<span class="unit-counter">{{ ingredient.units }}</span></li>
+                </ul>
+            </div><!-- end: .inventory -->
 
-        <div class="site-bd">
-            <header class="header">
+            <div class="menu">
+                <h2 class="display-header">Drink Menu</h2>
+                <ul class="menu-list">
+                    <li class="menu-list-item" ng-repeat="drink in recipes">{{ drink.displayName }} <span class="menu-price">{{ drink.price | currency }}</span></li>
+                </ul>
+            </div> <!-- end: .menu -->
+        </div> <!-- end: .display -->
 
-            </header>
-            <div ng-view></div>
-        </div> <!-- end: .site-bd -->
+        <div class="order-drink-menu">
+            <button ng-repeat="drink in recipes" ng-click="makeDrink(drink.name)" model="drink.ingredients" class="order-drink-btn">{{ drink.displayName }}</button>
+            <button ng-click="restock()" class="order-drink-btn restock">Restock Machine</button>
+        </div>
 
-        <div class="site-ft">
-            <footer class="footer">
-
-            </footer>
-      </div> <!-- end: .site-ft -->
-
-    </div> <!-- end: .site -->
+    </div> <!-- end: .app -->
     <!-- Scripts -->
     <script src="/assets/scripts/App.js"></script>
     <!-- // Scripts -->

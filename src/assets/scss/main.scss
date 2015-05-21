@@ -1,0 +1,74 @@
+@import "compass/css3";
+@import "susy";
+
+@import "compass/reset";
+
+// Susy map to override defaults
+$susy: (
+	columns: 12,
+	gutter-position: inside,
+);
+
+.app {
+	@include container(1120px);
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+.display {
+	margin-top: 30px;
+}
+
+.inventory {
+	margin-bottom: 10px;
+	@include span(12 of 12);
+
+	@media (min-width: 969px) {
+		@include span(6 of 12);
+	}
+}
+
+.display-header {
+	margin-bottom: 20px;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.inventory-list-item {
+	margin-bottom: 7px;
+}
+
+.unit-counter {
+	margin-left: 5px;
+}
+
+.menu {
+	margin-bottom: 10px;
+	@include span(12 of 12);
+
+	@media (min-width: 969px) {
+		@include span(6 of 12);
+	}
+}
+
+.menu-price {
+	margin-left: 5px;
+}
+
+.menu-list-item {
+	margin-bottom: 7px;
+}
+
+.order-drink-menu {
+	@include span(12 of 12);
+}
+
+.order-drink-btn {
+	display: block;
+	margin-bottom: 10px;
+	padding: 8px 10px;
+
+	@media (min-width: 969px) {
+		float: left;
+		margin-left: 10px;
+	}
+}
