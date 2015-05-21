@@ -15,12 +15,14 @@
     <div class="app" role="main">
         <div class="display">
             <div class="inventory">
+                <h2 class="display-header">Inventory</h2>
                 <ul class="inventory-list">
                     <li class="inventory-list-item" ng-repeat="ingredient in inventory">{{ ingredient.displayName }}<span class="unit-counter">{{ ingredient.units }}</span></li>
                 </ul>
             </div><!-- end: .inventory -->
 
             <div class="menu">
+                <h2 class="display-header">Drink Menu</h2>
                 <ul class="menu-list">
                     <li class="menu-list-item" ng-repeat="drink in recipes">{{ drink.displayName }} <span class="menu-price">{{ drink.price | currency }}</span></li>
                 </ul>
