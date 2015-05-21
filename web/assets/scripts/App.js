@@ -111,7 +111,7 @@ angular.module('coffeeOMatic.controllers', [])
         // grab our data
         $scope.inventory = inventoryService.getInventory();
         $scope.recipes = recipeService.getRecipes();
-        $scope.restockInventory = JSON.stringify(inventoryService.getInventory()); // save state for restocking
+        var restockInventory = JSON.stringify(inventoryService.getInventory()); // save state for restocking outside of scope
 
         $scope.makeDrink = function(drinkName){
             var ingredientsToUse = recipeService.getDrinkDetails(drinkName, 'ingredients');
@@ -125,7 +125,7 @@ angular.module('coffeeOMatic.controllers', [])
             }
         };
         $scope.restock = function() {
-            inventoryService.resetInventory($scope.inventory, $scope.restockInventory);
+            inventoryService.resetInventory($scope.inventory, restockInventory);
         }
     });
 
