@@ -133,15 +133,6 @@
     // Services
     angular.module('coffeeOMatic.services', [])
         .factory('inventoryService', function(){
-            var inventoryManager = {
-                getIngredientName: function() {
-                    return this.displayName;
-                },
-                getUnitsRemaining: function() {
-                    return this.units;
-                }
-            }
-
             return {
                 getInventory: function() {
                     return coffeeOMatic.inventory;
