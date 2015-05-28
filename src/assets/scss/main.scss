@@ -1,7 +1,7 @@
 @import "compass/css3";
 @import "susy";
 
-@import "compass/reset";
+$breakpoint: 768px;
 
 // Susy map to override defaults
 $susy: (
@@ -9,22 +9,37 @@ $susy: (
 	gutter-position: inside,
 );
 
+@import "compass/reset";
+
 .app {
-	@include container(1120px);
+	display: flex;
+	flex-flow: row wrap;
+	max-width: 1120px;
+	min-width: 320px;
+	margin: 0 auto;
 	font-family: Helvetica, Arial, sans-serif;
+
+	@media (min-width: $breakpoint) {
+		flex-direction: column;
+	}
 }
 
 .display {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+	flex: 1 100%;
 	margin-top: 30px;
+	padding-left: 30px;
+	padding-right: 30px;
+
+	@media (min-width: $breakpoint) {
+		flex-direction: column;
+	}
 }
 
 .inventory {
 	margin-bottom: 10px;
-	@include span(12 of 12);
-
-	@media (min-width: 969px) {
-		@include span(6 of 12);
-	}
 }
 
 .display-header {
@@ -33,8 +48,23 @@ $susy: (
 	font-weight: bold;
 }
 
+.inventory-list {
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: space-around;
+
+	@media (min-width: $breakpoint) {
+		flex-direction: row;
+	}
+}
+
 .inventory-list-item {
 	margin-bottom: 7px;
+
+	@media (min-width: $breakpoint) {
+		margin-left: 0;
+		margin-right: 0;
+	}
 }
 
 .unit-counter {
@@ -43,15 +73,20 @@ $susy: (
 
 .menu {
 	margin-bottom: 10px;
-	@include span(12 of 12);
-
-	@media (min-width: 969px) {
-		@include span(6 of 12);
-	}
 }
 
 .menu-price {
 	margin-left: 5px;
+}
+
+.menu-list {
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: space-around;
+
+	@media (min-width: $breakpoint) {
+		flex-direction: row;
+	}
 }
 
 .menu-list-item {
@@ -59,7 +94,14 @@ $susy: (
 }
 
 .order-drink-menu {
-	@include span(12 of 12);
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: center;
+	flex: 0 100%;
+
+	@media (min-width: $breakpoint) {
+		flex-direction: row;
+	}
 }
 
 .order-drink-btn {
@@ -67,7 +109,7 @@ $susy: (
 	margin-bottom: 10px;
 	padding: 8px 10px;
 
-	@media (min-width: 969px) {
+	@media (min-width: $breakpoint) {
 		float: left;
 		margin-left: 10px;
 	}
